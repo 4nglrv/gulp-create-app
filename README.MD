@@ -20,7 +20,7 @@ yarn start
 ```
 yarn build
 ```  
-### Convert all image files from assets to webp format
+### Convert all image from assets to webp format
 ```
 yarn webp
 ```

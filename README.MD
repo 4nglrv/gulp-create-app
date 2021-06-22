@@ -39,6 +39,11 @@ yarn rm
 | `modules.js`    | included js and css modules                                 |
 | `rollup.config.js`    | rollup configuration file                                 |
 
+## 
+To exclude from build the imported module, the name of the module should begin with a symbol _
+```
+_mainSctipt.js
+```
 
 ## Include third-party libraries
 ```js

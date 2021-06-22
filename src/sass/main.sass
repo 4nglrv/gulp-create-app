@@ -1,0 +1,30 @@
+@import './root/ui'
+@import 'nav'
+
+a, div 
+    color: $red
+
+ul
+    list-style: none
+    display: flex
+    flex-direction: row
+    justify-content: center
+    li:last-child
+        margin-left: 8em
+
+.main
+    text-align: center
+    display: flex
+    justify-content: center
+    flex-direction: column
+
+.repos
+    display: flex
+    justify-content: center
+    align-items: baseline
+    &__item
+        display: flex
+        flex-direction: column
+        justify-content: center
+        &:last-child
+            margin-left: 8em  

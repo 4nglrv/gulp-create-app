@@ -1,0 +1,103 @@
+@import 'libs'
+@import 'vars'
+
+*
+    padding: 0
+    margin: 0
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    font-family: $default-font
+    box-sizing: border-box
+    &:before, &:after
+        -webkit-box-sizing: border-box
+        -moz-box-sizing: border-box
+        box-sizing: border-box
+
+*::-webkit-input-placeholder
+    color: #666
+    opacity: 1
+
+*:-moz-placeholder
+    color: #666
+    opacity: 1
+
+*::-moz-placeholder
+    color: #666
+    opacity: 1
+
+*:-ms-input-placeholder
+    color: #666
+    opacity: 1
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+    color: #666
+body input:required:valid,
+body textarea:required:valid
+    color: #666
+
+html, body
+    min-width: 320px
+    height: 100%
+    box-sizing: border-box
+
+h1
+    font-size: 24px
+    letter-spacing: -0.02em
+
+h2
+    line-height: 22px
+    font-size: 18px
+
+ul
+    list-style-type: none
+
+main
+    position: relative
+
+input, textarea
+    border: none
+    background-image: none
+    background-color: transparent
+    -webkit-box-shadow: none
+    -moz-box-shadow: none
+    box-shadow: none
+    &:focus
+        border: none
+        box-sizing: border-box
+        outline: none
+
+button
+    padding: 0
+    border: none
+    font: inherit
+    color: inherit
+    background-color: transparent
+    outline: none
+    &:hover
+        border: none
+        outline: none
+    &:active
+        border: none
+        outline: none
+    &:focus
+        outline: none
+        border: none
+
+hr
+    border-top: 0px
+
+#wrapper
+    position: relative
+    width: 100%
+
+.container
+    padding-left: calc(50% - 665px)
+    padding-right: calc(50% - 665px)
+
+.flex
+    display: flex
+
+@media screen and (max-width: 1200px)
+    .container
+        padding: 0 5px

@@ -1,0 +1,49 @@
+{
+  "name": "gulp-create-app",
+  "version": "1.0.0",
+  "private": true,
+  "extension": "sass",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build",
+	  "webp": "gulp webp",
+    "rm": "gulp rm"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-inject": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/stream": "^2.0.0",
+    "browser-sync": "^2.26.14",
+    "cssnano": "^5.0.4",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-better-rollup": "^4.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-cleancss": "^0.2.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-webp": "^4.0.1",
+    "node-sass": "^6.0.0",
+    "normalize.css": "^8.0.1",
+    "postcss": "^8.3.0",
+    "rollup": "^2.50.4",
+    "rollup-plugin-uglify": "^6.0.4"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}

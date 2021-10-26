@@ -26,7 +26,7 @@ yarn start
 ```
 yarn build
 ```  
-### Convert all image from assets to webp format
+### Optimize and convert all images to webp format
 ```
 yarn webp
 ```

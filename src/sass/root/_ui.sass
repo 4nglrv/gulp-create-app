@@ -1,17 +1,16 @@
+// *** third-party libs (normalize and etc..) ***
 @import 'libs'
+
+// *** fonts *** 
+@import 'fonts'
+
+// *** variables *** 
 @import 'vars'
 
+// *** clear *** 
 *
     padding: 0
     margin: 0
-    -webkit-box-sizing: border-box
-    -moz-box-sizing: border-box
-    font-family: $default-font
-    box-sizing: border-box
-    &:before, &:after
-        -webkit-box-sizing: border-box
-        -moz-box-sizing: border-box
-        box-sizing: border-box
 
 *::-webkit-input-placeholder
     color: #666
@@ -36,24 +35,22 @@ body input:required:valid,
 body textarea:required:valid
     color: #666
 
-html, body
-    min-width: 320px
-    height: 100%
-    box-sizing: border-box
+html
+    font-size: 100%
 
-h1
-    font-size: 24px
-    letter-spacing: -0.02em
+a
+    color: var(--red)
 
 h2
-    line-height: 22px
-    font-size: 18px
+    font-size: 2.125em
+    text-transform: uppercase
+    font-weight: 500
+
+body
+    font-family: $Roboto
 
 ul
     list-style-type: none
-
-main
-    position: relative
 
 input, textarea
     border: none
@@ -84,20 +81,9 @@ button
         outline: none
         border: none
 
-hr
-    border-top: 0px
-
-#wrapper
-    position: relative
-    width: 100%
-
-.container
-    padding-left: calc(50% - 665px)
-    padding-right: calc(50% - 665px)
-
-.flex
+.wrapper
     display: flex
-
-@media screen and (max-width: 1200px)
-    .container
-        padding: 0 5px
+    flex-direction: column
+    width: 100%
+    height: 100%
+    background: var(--white)

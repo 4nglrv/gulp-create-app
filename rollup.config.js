@@ -29,4 +29,6 @@ const rollupConfig = {
 	}), inject(nodeModules), uglify() ],
 }
 
+// TODO: Make dev hosting
+
 module.exports = rollupConfig

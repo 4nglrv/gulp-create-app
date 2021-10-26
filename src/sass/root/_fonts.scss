@@ -1,0 +1,8 @@
+@import 'mixins';
+// Roboto
+@include font-face('Roboto', '../fonts/Roboto-Bold', 700, 'normal', 'woff');
+@include font-face('Roboto', '../fonts/Roboto-Bold', 700, 'normal', 'woff2');
+@include font-face('Roboto', '../fonts/Roboto-Medium', 500, 'normal', 'woff');
+@include font-face('Roboto', '../fonts/Roboto-Medium', 500, 'normal', 'woff2');
+@include font-face('Roboto', '../fonts/Roboto-Regular', 400, 'normal', 'woff');
+@include font-face('Roboto', '../fonts/Roboto-Regular', 400, 'normal', 'woff2');

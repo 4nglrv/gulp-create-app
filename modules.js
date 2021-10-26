@@ -6,9 +6,6 @@ var cssLibs = [
 
 // ** Modules which you import from node_modules
 var nodeModules = {
-	$: "jquery",
-	'jQuery': 'jquery',
-	'windows.jQuery': 'jquery',
 	modules: {
 		$: "jquery",
 		'jQuery': 'jquery',

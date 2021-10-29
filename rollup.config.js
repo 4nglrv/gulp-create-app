@@ -7,11 +7,12 @@ var { nodeModules } = require("./modules")
 
 nodeModules.include = "**/*.js"
 const project_folder = "src"
+const format = "commonjs"
 const rollupConfig = {
 	plugins: [
 		babel({
 			exclude: "node_modules/**",
-			presets: [["@babel/preset-env", { modules: false }]],
+			presets: [["@babel/preset-env", { modules: format }]],
 		}),
 		commonjs({
 			// non-CommonJS modules will be ignored, but you can also
@@ -29,10 +30,14 @@ const rollupConfig = {
 			main: false,
 		}),
 		inject(nodeModules),
+		uglify()
 	],
 }
 
 // TODO: Make dev hosting faster
 // ** https://stackoverflow.com/questions/45785357/how-to-disable-tree-shaking-in-rollupjs **
 
-module.exports = rollupConfig
+module.exports = {
+	rollupConfig,
+	format
+}

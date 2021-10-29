@@ -13,7 +13,7 @@ var gulp = require("gulp"),
 	del = require("del"),
 	browserSync = require("browser-sync").create(),
 	{ cssLibs } = require("./modules"),
-	rollupConfig = require("./rollup.config"),
+	{ rollupConfig, format } = require("./rollup.config"),
 	ttf2woff = require("gulp-ttf2woff"),
 	ttf2woff2 = require("gulp-ttf2woff2")
 
@@ -66,10 +66,12 @@ const paths = {
 
 // Unifies required .css of all used CSS libraries in _libs.css file and send it to src/scss folder
 gulp.task("css-libs", (done) => {
-	src(cssLibs)
-		.pipe(concat("_libs.scss"))
-		.pipe(dest(paths.src.cssLibs))
-		.pipe(browserSync.stream({ once: true }))
+	if (cssLibs.length > 0) {
+		src(cssLibs)
+			.pipe(concat("_libs.scss"))
+			.pipe(dest(paths.src.cssLibs))
+			.pipe(browserSync.stream({ once: true }))
+	}
 	done()
 })
 
@@ -116,7 +118,7 @@ gulp.task("rollup", (done) => {
 		.pipe(sourcemaps.init())
 		.pipe(
 			rollup(rollupConfig, {
-				format: "esm",
+				format: format,
 			})
 		)
 		.on("error", (err) => console.log(err))

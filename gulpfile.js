@@ -2,7 +2,6 @@ var gulp = require("gulp"),
 	{ series, dest, src } = require("gulp"),
 	rollup = require("gulp-better-rollup"),
 	sass = require("gulp-sass"),
-	fileinclude = require("gulp-file-include"),
 	sourcemaps = require("gulp-sourcemaps"),
 	autoprefixer = require("gulp-autoprefixer"),
 	concat = require("gulp-concat"),
@@ -16,9 +15,26 @@ var gulp = require("gulp"),
 	{ rollupConfig, format } = require("./rollup.config"),
 	ttf2woff = require("gulp-ttf2woff"),
 	ttf2woff2 = require("gulp-ttf2woff2")
+	argv = require('yargs').argv
+	pug = require('gulp-pug')
+	notify = require('gulp-notify')
+	changed = require('gulp-changed')
+	sassGlob = require('gulp-sass-glob')
 
 const source_folder = "src"
 const build_folder = "dist"
+
+let pugPage = ''
+if (argv.page) {
+	pugPage = `pug/**/${argv.page}.pug`
+}
+
+let notifyOnError = () => {
+	return notify.onError({
+		message: "Error: <%= error.message %>",
+		sound: true,
+	})
+}
 
 const paths = {
 	src: {
@@ -26,6 +42,9 @@ const paths = {
 			source_folder + "/pages/**.html",
 			"!" + source_folder + "/pages/_*.html",
 		],
+		pug: [source_folder + "/pug/**/*.pug"],
+		pugIgnorePartials: [source_folder + "/pug/**/*.pug", "!" + source_folder + "/pug/**/_*.pug"],
+		pugOnePage: [source_folder + pugPage, "!" + source_folder + "/pug/**/_*.pug"],
 		sass: [
 			source_folder + "/sass/**.sass",
 			"!" + source_folder + "/sass/_*.sass",
@@ -51,6 +70,8 @@ const paths = {
 			source_folder + "/pages/**/*.html",
 			source_folder + "/components/**/*.html",
 		],
+		pugIgnorePartials: [source_folder + "/pug/**/*.pug", source_folder + "/pug/**/_*.pug"],
+		pugOnePage: [source_folder + pugPage, source_folder + "/pug/**/_*.pug"],
 		sass: source_folder + "/sass/**/*",
 		images: source_folder + "/images/**/*",
 		fonts: source_folder + "/fonts/**.*",
@@ -70,6 +91,7 @@ gulp.task("css-libs", (done) => {
 		src(cssLibs)
 			.pipe(concat("_libs.scss"))
 			.pipe(dest(paths.src.cssLibs))
+			.on("error", notifyOnError())
 			.pipe(browserSync.stream({ once: true }))
 	}
 	done()
@@ -79,6 +101,7 @@ gulp.task("css-libs", (done) => {
 gulp.task("images", (done) => {
 	src(paths.src.images)
 		.pipe(dest(paths.build.images))
+		.on("error", notifyOnError())
 		.pipe(browserSync.stream({ once: true }))
 	done()
 })
@@ -87,10 +110,12 @@ gulp.task("images", (done) => {
 gulp.task("fonts", (done) => {
 	src(paths.src.fonts)
 		.pipe(ttf2woff())
+		.on("error", notifyOnError())
 		.pipe(dest(paths.build.fonts))
 		.pipe(browserSync.stream({ once: true }))
 	src(paths.src.fonts)
 		.pipe(ttf2woff2())
+		.on("error", notifyOnError())
 		.pipe(dest(paths.build.fonts))
 		.pipe(browserSync.stream({ once: true }))
 	done()
@@ -107,6 +132,7 @@ gulp.task("webp", (done) => {
 				interlaced: true,
 				optimizationLevel: 3,
 			})
+			.on("error", notifyOnError())
 		)
 		.pipe(dest(paths.build.images))
 	done()
@@ -120,8 +146,8 @@ gulp.task("rollup", (done) => {
 			rollup(rollupConfig, {
 				format: format,
 			})
+			.on("error", notifyOnError())
 		)
-		.on("error", (err) => console.log(err))
 		.pipe(sourcemaps.write("."))
 		.pipe(dest(paths.build.js))
 		.pipe(browserSync.stream({ once: true }))
@@ -131,17 +157,29 @@ gulp.task("rollup", (done) => {
 // SASS Compiler and Post CSS
 gulp.task("sass", (done) => {
 	src(paths.src.sass)
+		.on("error", notifyOnError())
+		.pipe(
+			changed(paths.build.css, {
+				extension: ".*ss",
+			})
+		)
+		.pipe(sassGlob())
 		.pipe(
 			sass({
 				outputStyle: "expanded",
-			}).on("error", (err) => {
-				console.error(err.message)
+				errLogToConsole: true
 			})
+			.on("error", notifyOnError())
 		)
 		.pipe(
 			autoprefixer({
 				overrideBrowserslist: ["last 2 versions"],
 				cascade: true,
+			})
+		)
+		.pipe(
+			rename({
+				basename: "styles",
 			})
 		)
 		.pipe(dest(paths.build.css))
@@ -158,15 +196,19 @@ gulp.task("sass", (done) => {
 
 // HTML include
 gulp.task("html", (done) => {
-	src(paths.src.html)
-		.pipe(
-			fileinclude({
-				prefix: "@@",
-				basepath: "@file",
-			})
-		)
-		.pipe(dest(paths.build.html))
-		.pipe(browserSync.stream({ once: true }))
+	if (argv.page) {
+		src(paths.src.pugOnePage)
+			.on("error", notifyOnError())
+			.pipe(pug({ pretty: true }))
+			.pipe(dest(paths.build.html))
+			.pipe(browserSync.stream({ once: true }))
+	} else {
+		src(paths.src.pugIgnorePartials)
+			.pipe(pug({ pretty: true }))
+			.on("error", notifyOnError())
+			.pipe(dest(paths.build.html))
+			.pipe(browserSync.stream({ once: true }))
+	}
 	done()
 })
 
@@ -177,17 +219,25 @@ gulp.task("serve", (done) => {
 			baseDir: paths.clean,
 		},
 		port: 5000,
-		notify: false,
 		directory: true,
+		notify: false,
+		open: false,
 	})
 	done()
 })
 
 // Watchers
 gulp.task("watchFiles", (done) => {
-	gulp
-		.watch(paths.watch.html)
-		.on("change", gulp.series("html", browserSync.reload))
+	if (argv.page) {
+		gulp
+			.watch(paths.watch.pugOnePage)
+			.on("change", gulp.series("html", browserSync.reload))
+	} else {
+		gulp
+			.watch(paths.watch.pugIgnorePartials)
+			.on("change", gulp.series("html", browserSync.reload))
+	}
+
 	gulp
 		.watch(paths.watch.sass)
 		.on("change", gulp.series("sass", browserSync.reload))
@@ -215,8 +265,12 @@ gulp.task("rm", (done) => {
 })
 
 gulp.task(
-	"build",
-	series(gulp.parallel("html", "rollup", "sass", "fonts", "images", "css-libs"))
+	"build", (done) => {
+		del(paths.clean)
+		series(gulp.parallel("html", "rollup", "sass", "fonts", "images", "css-libs"))
+		done()
+		console.log("\x1b[32m%s", "builded!")
+	}
 )
 
 gulp.task("webp", series(gulp.parallel("webp")))

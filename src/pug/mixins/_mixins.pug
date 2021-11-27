@@ -1,0 +1,10 @@
+mixin svg(svg_id)
+  span(class='icon-'+svg_id)
+    svg.icon-svg()&attributes(attributes)
+      use(xlink:href= './img/sprite.svg#' + svg_id)
+
+
+//- mixin svg(svg_id)
+//-   span(class='icon-'+svg_id)
+//-     svg.icon-svg()&attributes(attributes)
+//-       use(xlink:href= '#' + svg_id)

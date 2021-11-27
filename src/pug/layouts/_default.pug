@@ -1,0 +1,20 @@
+include ../mixins/_mixins
+
+block data
+
+doctype html
+
+html(lang='en')
+  include ./head/_head-og
+
+  body
+    #app.main-wrapper
+      block header
+
+      main.content(class=vars.content_class)
+        block content
+
+      block footer
+
+    include ../includes/_scripts
+

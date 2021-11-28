@@ -44,7 +44,7 @@ const paths = {
 		],
 		pug: [source_folder + "/pug/**/*.pug"],
 		pugIgnorePartials: [source_folder + "/pug/**/*.pug", "!" + source_folder + "/pug/**/_*.pug"],
-		pugOnePage: [source_folder + pugPage, "!" + source_folder + "/pug/**/_*.pug"],
+		pugOnePage: [source_folder + '/' + pugPage, "!" + source_folder + "/pug/**/_*.pug"],
 		sass: [
 			source_folder + "/sass/**.sass",
 			"!" + source_folder + "/sass/_*.sass",
@@ -72,7 +72,7 @@ const paths = {
 			source_folder + "/components/**/*.html",
 		],
 		pugIgnorePartials: [source_folder + "/pug/**/*.pug", source_folder + "/pug/**/_*.pug"],
-		pugOnePage: [source_folder + pugPage, source_folder + "/pug/**/_*.pug"],
+		pugOnePage: [source_folder + '/' + pugPage, source_folder + "/pug/**/_*.pug"],
 		sass: source_folder + "/sass/**/*",
 		images: source_folder + "/images/**/*",
 		fonts: source_folder + "/fonts/**.*",

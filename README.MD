@@ -1,26 +1,26 @@
 # Gulp-create-app
 
 This gulp project for developing static pages (e.g. django, bitrix)
-
-## Stack
 <p align="center">
 <a href="https://github.com/gulpjs/gulp" target="_blank" rel="noopener noreferrer">
-<img width="77" height="170" src='./src/images/gulp-logo.png' alt='gulp-logo'>
+<img width="77" height="170" src='./src/images/gulp-logo.png' alt='gulp-logo' align="center">
 </a>
 <a href="https://github.com/rollup/rollup" target="_blank" rel="noopener noreferrer" style="margin-left: 4em">
-<img width="115" height="150" src='./src/images/rollup-logo.png' alt='gulp-logo'>
+<img width="115" height="150" src='./src/images/rollup-logo.png' alt='rollup-logo' align="center">
 </a>
-</p>
-<p align="center">
-<p align="center">Gulp Rollup</p>
+<a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="center"></a>
 </p>
 
 
 ## Commands
 
-### Launch local host and build dist
+### Launch localhost
 ```
 yarn start
+``` 
+### Launch localhost with one page (when u have many pages)
+```
+yarn start --page <name>
 ``` 
 ### Only build dist
 ```

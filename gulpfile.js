@@ -52,12 +52,13 @@ const paths = {
 		images: source_folder + "/images/**.*",
 		fonts: source_folder + "/fonts/**.*",
 		css: build_folder + "/css/**/*.css",
-		js: [source_folder + "/js/**/*.js", "!" + source_folder + "/js/**/_*.js"],
+		es6: [source_folder + "/js/es6/**/*.js", "!" + source_folder + "/js/es6/**/_*.js"],
+		js: [source_folder + "/js/*.js"],
 		cssLibs: source_folder + "/sass/root/",
 	},
 
 	build: {
-		html: build_folder + "/html/",
+		html: build_folder,
 		css: build_folder + "/css/",
 		images: build_folder + "/images/",
 		fonts: build_folder + "/fonts/",
@@ -75,7 +76,8 @@ const paths = {
 		sass: source_folder + "/sass/**/*",
 		images: source_folder + "/images/**/*",
 		fonts: source_folder + "/fonts/**.*",
-		js: source_folder + "/js/**/*.js",
+		es6: source_folder + "/js/es6/**/*.js",
+		js: source_folder + "/js/*.js",
 	},
 
 	prod: {
@@ -140,7 +142,7 @@ gulp.task("webp", (done) => {
 
 // Rollup builder
 gulp.task("rollup", (done) => {
-	src(paths.src.js)
+	src(paths.src.es6)
 		.pipe(sourcemaps.init())
 		.pipe(
 			rollup(rollupConfig, {
@@ -148,9 +150,21 @@ gulp.task("rollup", (done) => {
 			})
 			.on("error", notifyOnError())
 		)
+		.pipe(
+			rename({
+				basename: "bundle",
+			})
+		)
 		.pipe(sourcemaps.write("."))
 		.pipe(dest(paths.build.js))
 		.pipe(browserSync.stream({ once: true }))
+	done()
+})
+
+// Copy JS
+gulp.task("js", (done) => {
+	src(paths.src.js)
+		.pipe(dest(paths.build.js))
 	done()
 })
 
@@ -242,8 +256,11 @@ gulp.task("watchFiles", (done) => {
 		.watch(paths.watch.sass)
 		.on("change", gulp.series("sass", browserSync.reload))
 	gulp
-		.watch(paths.watch.js)
+		.watch(paths.watch.es6)
 		.on("change", gulp.series("rollup", browserSync.reload))
+	gulp
+		.watch(paths.watch.js)
+		.on("change", gulp.series("js", browserSync.reload))
 	gulp
 		.watch(paths.watch.images)
 		.on("change", gulp.series("images", browserSync.reload))
@@ -253,7 +270,7 @@ gulp.task("watchFiles", (done) => {
 gulp.task(
 	"default",
 	series(
-		gulp.parallel("html", "rollup", "sass", "images", "fonts", "css-libs"),
+		gulp.parallel("html", "rollup", "js", "sass", "images", "fonts", "css-libs"),
 		gulp.parallel("watchFiles", "serve")
 	)
 )

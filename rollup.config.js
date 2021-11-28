@@ -30,7 +30,7 @@ const rollupConfig = {
 			sourceMap: false, // Default: true
 		}),
 		babel({ babelHelpers: 'bundled' }),
-		// uglify(),
+		uglify(),
 	],
 	output: [
 		{

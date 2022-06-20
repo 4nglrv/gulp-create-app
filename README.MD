@@ -3,10 +3,10 @@
 This gulp project for developing static pages (e.g. django, bitrix)
 <p align="center">
 <a href="https://github.com/gulpjs/gulp" target="_blank" rel="noopener noreferrer">
-<img width="77" height="170" src='./src/images/gulp-logo.png' alt='gulp-logo' align="center">
+<img width="77" height="170" src='https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png' alt='gulp-logo' align="center">
 </a>
 <a href="https://github.com/rollup/rollup" target="_blank" rel="noopener noreferrer" style="margin-left: 4em">
-<img width="115" height="150" src='./src/images/rollup-logo.png' alt='rollup-logo' align="center">
+<img width="115" height="150" src='https://camo.githubusercontent.com/50e43473527a57747fb7cd9b0061355205ac9a2763207a78d9812ceef1da52c0/68747470733a2f2f726f6c6c75706a732e6f72672f6c6f676f2e737667' alt='rollup-logo' align="center">
 </a>
 <a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="center"></a>
 </p>

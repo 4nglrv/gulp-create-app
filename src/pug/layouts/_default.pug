@@ -10,13 +10,13 @@ html(lang='en')
   body
     #app.main-wrapper
       header
-        block header
+        include ../components/_header
 
       main.content(class=vars.content_class)
         block content
 
       footer
-        block footer
+        include ../components/_footer
 
     include ../base/_includes
 

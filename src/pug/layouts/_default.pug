@@ -9,12 +9,14 @@ html(lang='en')
 
   body
     #app.main-wrapper
-      block header
+      header
+        block header
 
       main.content(class=vars.content_class)
         block content
 
-      block footer
+      footer
+        block footer
 
     include ../includes/_scripts
 

@@ -3,15 +3,15 @@
 var cssLibs = []
 
 // ** Modules which you import from node_modules
-var nodeModules = {
-	modules: {
-		$: "jquery",
-		'jQuery': 'jquery',
-		'windows.jQuery': 'jquery',
-	}
-}
+// var nodeModules = {
+// 	modules: {
+// 		$: "jquery",
+// 		'jQuery': 'jquery',
+// 		'windows.jQuery': 'jquery',
+// 	}
+// }
 
 module.exports = {
 	cssLibs,
-	nodeModules
+	// nodeModules
 }

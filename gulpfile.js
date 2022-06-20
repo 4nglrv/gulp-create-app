@@ -1,7 +1,7 @@
 var gulp = require("gulp"),
 	{ series, dest, src } = require("gulp"),
 	rollup = require("gulp-better-rollup"),
-	sass = require("gulp-sass"),
+	sass = require("gulp-dart-sass"),
 	sourcemaps = require("gulp-sourcemaps"),
 	autoprefixer = require("gulp-autoprefixer"),
 	concat = require("gulp-concat"),
@@ -19,7 +19,6 @@ var gulp = require("gulp"),
 	pug = require('gulp-pug')
 	notify = require('gulp-notify')
 	changed = require('gulp-changed')
-	sassGlob = require('gulp-sass-glob')
 
 const source_folder = "src"
 const build_folder = "dist"
@@ -48,6 +47,8 @@ const paths = {
 		sass: [
 			source_folder + "/sass/**.sass",
 			"!" + source_folder + "/sass/_*.sass",
+			source_folder + "/sass/**.scss",
+			"!" + source_folder + "/sass/_*.scss",
 		],
 		images: source_folder + "/images/**/**.*",
 		fonts: source_folder + "/fonts/**/**.*",
@@ -177,14 +178,7 @@ gulp.task("sass", (done) => {
 				extension: ".*ss",
 			})
 		)
-		.pipe(sassGlob())
-		.pipe(
-			sass({
-				outputStyle: "expanded",
-				errLogToConsole: true
-			})
-			.on("error", notifyOnError())
-		)
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
 		.pipe(
 			autoprefixer({
 				overrideBrowserslist: ["last 2 versions"],
@@ -193,7 +187,7 @@ gulp.task("sass", (done) => {
 		)
 		.pipe(
 			rename({
-				basename: "styles",
+				basename: "style",
 			})
 		)
 		.pipe(dest(paths.build.css))

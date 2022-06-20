@@ -5,9 +5,9 @@ const { babel } = require("@rollup/plugin-babel")
 const commonjs = require("@rollup/plugin-commonjs")
 const nodeResolve = require("@rollup/plugin-node-resolve").nodeResolve
 const inject = require("@rollup/plugin-inject")
-var { nodeModules } = require("./modules")
+// var { nodeModules } = require("./modules")
 
-nodeModules.include = "**/*.js"
+// nodeModules.include = "**/*.js"
 const project_folder = "src"
 const format = "umd"
 
